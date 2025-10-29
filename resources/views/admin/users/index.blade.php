@@ -1,6 +1,7 @@
 @php
 use Illuminate\Support\Str;
 @endphp
+
 <x-layouts.app :title="__('Manajemen User')">
     <div class="flex h-full w-full flex-1 flex-col gap-6">
         <x-admin-header
@@ -17,7 +18,7 @@ use Illuminate\Support\Str;
                     </svg>
                 </a>
             </x-slot>
-        />
+        </x-admin-header>
 
         @if(session('success'))
             <x-alert type="success" :message="session('success')" />
@@ -71,4 +72,3 @@ use Illuminate\Support\Str;
         @endif
     </div>
 </x-layouts.app>
-
