@@ -71,6 +71,41 @@
     @apply grid gap-2;
 }
 
+/* Improve button text contrast for Flux buttons */
+[data-flux-button][data-variant="primary"] {
+    @apply text-white font-bold;
+}
+
+[data-flux-button][data-variant="primary"] * {
+    @apply text-white;
+}
+
+/* Tech theme for profile avatar */
+[data-flux-avatar],
+div[data-flux-avatar] {
+    background: linear-gradient(
+        to bottom right,
+        rgb(59, 130, 246),
+        rgb(34, 211, 238)
+    ) !important;
+    background-color: transparent !important;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3),
+        0 4px 6px -2px rgba(59, 130, 246, 0.2) !important;
+    border: 1px solid rgba(103, 232, 249, 0.3) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+        "Liberation Mono", monospace !important;
+}
+
+[data-flux-avatar] span,
+div[data-flux-avatar] span {
+    color: white !important;
+    font-weight: 700 !important;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+        "Liberation Mono", monospace !important;
+}
+
 [data-flux-label] {
     @apply !mb-0 !leading-tight;
 }

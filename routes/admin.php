@@ -13,8 +13,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     // Reports management
     Route::get('/reports/list', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('/reports/{report}', [ReportController::class, 'show'])->name('admin.reports.show');
     Route::post('/reports/{report}/update-status', [ReportController::class, 'updateStatus'])
         ->name('admin.reports.update-status');
+    Route::delete('/reports/{report}', [ReportController::class, 'destroy'])
+        ->name('admin.reports.destroy');
 
     // Categories management
     Route::resource('categories', CategoryController::class)->names([

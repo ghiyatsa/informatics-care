@@ -61,7 +61,7 @@
                             <a href="{{ route('login') }}" class="px-4 py-2 text-blue-300 hover:text-blue-200 transition-colors font-medium">
                                 Masuk
                             </a>
-                            <a href="{{ route('register') }}" class="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/50">
+                            <a href="{{ route('register') }}" class="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/50 text-white font-bold">
                                 Daftar
                             </a>
                         @endauth
@@ -96,19 +96,19 @@
 
                     <div class="flex flex-col sm:flex-row justify-center gap-4 mb-20">
                         @auth
-                            <a href="{{ route('dashboard') }}" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50 overflow-hidden">
-                                <span class="relative z-10 flex items-center justify-center">
+                            <a href="{{ route('dashboard') }}" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50 overflow-hidden text-white">
+                                <span class="relative z-10 flex items-center justify-center text-white font-bold">
                                     Lihat Dashboard
-                                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
                                 </span>
                             </a>
                         @else
-                            <a href="{{ route('register') }}" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50 overflow-hidden">
-                                <span class="relative z-10 flex items-center justify-center">
+                            <a href="{{ route('register') }}" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50 overflow-hidden text-white">
+                                <span class="relative z-10 flex items-center justify-center text-white font-bold">
                                     Buat Laporan
-                                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
                                 </span>
@@ -364,16 +364,16 @@
                         </p>
 
                         @auth
-                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50">
+                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50 text-white font-bold">
                                 Buka Dashboard
-                                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="ml-2 w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                 </svg>
                             </a>
                         @else
-                            <a href="{{ route('register') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50">
+                            <a href="{{ route('register') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/50 text-white font-bold">
                                 Mulai Sekarang
-                                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="ml-2 w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                 </svg>
                             </a>

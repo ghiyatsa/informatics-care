@@ -31,6 +31,7 @@ class CategoryService
     public function updateCategory(Category $category, array $data): Category
     {
         $category->update($data);
+        // No need to reload relationships if not used
         return $category->fresh();
     }
 
@@ -39,7 +40,8 @@ class CategoryService
      */
     public function deleteCategory(Category $category): bool
     {
-        if ($category->reports()->count() > 0) {
+        // Optimized: Use exists() instead of count() for better performance
+        if ($category->reports()->exists()) {
             throw new \Exception('Kategori tidak dapat dihapus karena memiliki laporan!');
         }
 

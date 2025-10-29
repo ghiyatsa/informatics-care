@@ -323,7 +323,7 @@ new class extends Component {
                     <flux:button
                         :disabled="$errors->has('setupData')"
                         variant="primary"
-                        class="w-full"
+                        class="w-full !text-white !font-bold"
                         wire:click="showVerificationIfNecessary"
                     >
                         {{ $this->modalConfig['buttonText'] }}

@@ -23,5 +23,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin', function ($user) {
             return $user->isAdmin();
         });
+
+        // Optimize query performance by setting default pagination
+        \Illuminate\Pagination\Paginator::useBootstrap();
+
+        // Share common data to all views (optional optimization)
+        // view()->composer('*', function ($view) {
+        //     // Add common data if needed
+        // });
     }
 }

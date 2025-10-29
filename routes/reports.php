@@ -10,5 +10,7 @@ Route::prefix('reports')->middleware(['auth'])->group(function () {
         ->name('reports.store');
     Route::get('/my-reports', [ReportController::class, 'myReports'])
         ->name('reports.my');
+    Route::delete('/{report}', [ReportController::class, 'destroy'])
+        ->name('reports.destroy');
 });
 

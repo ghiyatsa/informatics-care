@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 <x-layouts.app :title="__('Laporan Saya')">
     <div class="flex h-full w-full flex-1 flex-col gap-6">
         <!-- Header Section with Tech Style -->
@@ -18,9 +21,9 @@
                         <p class="text-blue-200 text-lg mt-2">Selamat Datang, <span class="font-semibold text-cyan-300">{{ auth()->user()->name }}</span>!</p>
                         <p class="text-blue-300/70 text-sm font-mono">{{ auth()->user()->email }}</p>
                     </div>
-                    <a href="{{ route('reports.create') }}" class="group px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105 font-semibold font-mono flex items-center gap-2">
-                        <span>+ Create</span>
-                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('reports.create') }}" class="group px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105 font-semibold font-mono flex items-center gap-2 text-white font-bold">
+                        <span class="text-white">+ Create</span>
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                     </a>
@@ -41,6 +44,17 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="p-4 bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/30 text-red-300 rounded-xl backdrop-blur-sm shadow-lg shadow-red-500/10">
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
+
         @if($reports->isEmpty())
             <div class="group relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl border border-blue-500/20 p-12 text-center shadow-xl">
                 <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -52,8 +66,8 @@
                     </div>
                     <h3 class="text-2xl font-bold text-white mb-2">Belum Ada Laporan</h3>
                     <p class="text-slate-400 mb-6">Mulai dengan membuat laporan pertama Anda</p>
-                    <a href="{{ route('reports.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105 font-semibold font-mono">
-                        <span>Buat Laporan</span>
+                    <a href="{{ route('reports.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105 font-semibold font-mono text-white font-bold">
+                        <span class="text-white">Buat Laporan</span>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
@@ -61,69 +75,72 @@
                 </div>
             </div>
         @else
-            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl border border-blue-500/20 shadow-2xl">
-                <div class="space-y-3 p-6">
-                    @foreach($reports as $report)
-                        <div class="group relative overflow-hidden bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300">
-                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <div class="relative">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div class="flex-1">
-                                        <h3 class="text-xl font-bold text-white mb-3">{{ $report->title }}</h3>
-                                        <div class="flex flex-wrap items-center gap-3 text-sm">
-                                            <span class="flex items-center gap-2 text-slate-400">
-                                                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl border border-blue-500/20 shadow-2xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-800/50 border-b border-slate-700/50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-mono text-blue-300 uppercase tracking-wider">Judul</th>
+                                <th class="px-6 py-4 text-left text-xs font-mono text-blue-300 uppercase tracking-wider">Kategori</th>
+                                <th class="px-6 py-4 text-left text-xs font-mono text-blue-300 uppercase tracking-wider">Lokasi</th>
+                                <th class="px-6 py-4 text-left text-xs font-mono text-blue-300 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-left text-xs font-mono text-blue-300 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            @foreach($reports as $report)
+                                <tr class="hover:bg-slate-800/50 transition">
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm font-semibold text-white">{{ Str::limit($report->title, 40) }}</div>
+                                        <div class="text-xs text-slate-400 font-mono">{{ $report->created_at->format('d M Y, H:i') }}</div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-mono bg-blue-500/10 text-blue-400 rounded border border-blue-500/30">
+                                            {{ $report->category->name }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-slate-300 font-mono">{{ Str::limit($report->location, 20) }}</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border
+                                            @if($report->status->value === 'pending') bg-amber-500/10 text-amber-400 border-amber-500/30
+                                            @elseif($report->status->value === 'in_progress') bg-blue-500/10 text-blue-400 border-blue-500/30
+                                            @elseif($report->status->value === 'completed') bg-emerald-500/10 text-emerald-400 border-emerald-500/30
+                                            @else bg-red-500/10 text-red-400 border-red-500/30
+                                            @endif">
+                                            @if($report->status->value === 'pending') ⏳ PENDING
+                                            @elseif($report->status->value === 'in_progress') 🔄 IN PROGRESS
+                                            @elseif($report->status->value === 'completed') ✓ COMPLETED
+                                            @else ✕ REJECTED
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <button onclick="openDetailModal({{ $report->id }})"
+                                                class="group relative px-3 py-1.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 hover:border-cyan-400/50 rounded-lg text-cyan-400 hover:text-cyan-300 text-xs font-mono font-semibold transition-all hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-1.5">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                                 </svg>
-                                                {{ $report->category->name }}
-                                            </span>
-                                            <span class="w-1 h-1 bg-slate-600 rounded-full"></span>
-                                            <span class="flex items-center gap-2 text-slate-400">
-                                                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                </svg>
-                                                {{ $report->location }}
-                                            </span>
-                                            <span class="w-1 h-1 bg-slate-600 rounded-full"></span>
-                                            <span class="flex items-center gap-2 text-slate-400">
-                                                <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                                </svg>
-                                                {{ $report->created_at->format('d M Y, H:i') }}
-                                            </span>
+                                                View
+                                            </button>
+                                            <form action="{{ route('reports.destroy', $report) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="group relative px-3 py-1.5 bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/30 hover:border-red-400/50 rounded-lg text-red-400 hover:text-red-300 text-xs font-mono font-semibold transition-all hover:shadow-lg hover:shadow-red-500/20 flex items-center gap-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </div>
-                                    </div>
-                                    <span class="ml-4 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border
-                                        @if($report->status === 'pending') bg-amber-500/10 text-amber-400 border-amber-500/30
-                                        @elseif($report->status === 'in_progress') bg-blue-500/10 text-blue-400 border-blue-500/30
-                                        @elseif($report->status === 'completed') bg-emerald-500/10 text-emerald-400 border-emerald-500/30
-                                        @else bg-red-500/10 text-red-400 border-red-500/30
-                                        @endif">
-                                        @if($report->status === 'pending') ⏳ PENDING
-                                        @elseif($report->status === 'in_progress') 🔄 IN PROGRESS
-                                        @elseif($report->status === 'completed') ✓ COMPLETED
-                                        @else ✕ REJECTED
-                                        @endif
-                                    </span>
-                                </div>
-
-                                <p class="text-slate-300 mb-4 leading-relaxed">{{ $report->description }}</p>
-
-                                @if($report->admin_response)
-                                    <div class="mt-4 p-4 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-xl">
-                                        <p class="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            Respons Admin:
-                                        </p>
-                                        <p class="text-sm text-blue-300">{{ $report->admin_response }}</p>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="px-6 py-4 border-t border-slate-700/50 bg-slate-800/30">
@@ -131,5 +148,143 @@
                 </div>
             </div>
         @endif
+
+        <!-- Modal Detail Laporan -->
+        <div id="detailModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm hidden items-center justify-center z-50 overflow-y-auto">
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-xl shadow-xl max-w-3xl w-full mx-4 my-8 p-6 border border-blue-500/20">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Detail Laporan
+                    </h3>
+                    <button onclick="closeDetailModal()" class="text-slate-400 hover:text-white transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="detailContent" class="space-y-6">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openDetailModal(reportId) {
+                const modal = document.getElementById('detailModal');
+                const content = document.getElementById('detailContent');
+
+                // Show loading
+                content.innerHTML = '<div class="text-center py-8"><div class="text-cyan-400">Memuat...</div></div>';
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+
+                // Fetch report details
+                fetch(`/admin/reports/${reportId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const report = data.report;
+                        const statusBadge = getStatusBadge(report.status);
+                        const createdAt = new Date(report.created_at).toLocaleString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+
+                        content.innerHTML = `
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                    <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-1">ID Laporan</div>
+                                    <div class="text-white font-semibold font-mono">#${report.id}</div>
+                                </div>
+                                <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                    <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-1">Status</div>
+                                    <div>${statusBadge}</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-2">Judul Laporan</div>
+                                <div class="text-white font-semibold text-lg">${escapeHtml(report.title)}</div>
+                            </div>
+
+                            <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-2">Deskripsi</div>
+                                <div class="text-slate-300 whitespace-pre-wrap leading-relaxed max-h-96 overflow-y-auto">${escapeHtml(report.description)}</div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                    <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-2">Kategori</div>
+                                    <div class="px-3 py-1.5 inline-block bg-blue-500/10 text-blue-400 rounded border border-blue-500/30 font-mono text-sm">
+                                        ${escapeHtml(report.category.name)}
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                    <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-2">Lokasi</div>
+                                    <div class="text-white">${escapeHtml(report.location)}</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+                                <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-2">Tanggal Dibuat</div>
+                                <div class="text-white font-mono text-sm">${createdAt}</div>
+                            </div>
+
+                            ${report.admin_response ? `
+                                <div class="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-xl p-4 border border-blue-500/30">
+                                    <div class="text-xs font-mono text-blue-300 uppercase tracking-wider mb-2">Respon Admin</div>
+                                    <div class="text-cyan-300 whitespace-pre-wrap leading-relaxed">${escapeHtml(report.admin_response)}</div>
+                                </div>
+                            ` : ''}
+
+                            <div class="flex gap-3 pt-4 border-t border-slate-700/50">
+                                <button onclick="closeDetailModal()"
+                                    class="flex-1 px-6 py-3 border border-blue-500/30 hover:border-cyan-400/80 rounded-xl hover:bg-blue-500/10 transition-all backdrop-blur-sm text-white font-medium">
+                                    Tutup
+                                </button>
+                            </div>
+                        `;
+                    })
+                    .catch(error => {
+                        content.innerHTML = '<div class="text-center py-8"><div class="text-red-400">Gagal memuat data laporan</div></div>';
+                        console.error('Error:', error);
+                    });
+            }
+
+            function closeDetailModal() {
+                const modal = document.getElementById('detailModal');
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+
+            function getStatusBadge(status) {
+                const statusMap = {
+                    'pending': '<span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border bg-amber-500/10 text-amber-400 border-amber-500/30">⏳ PENDING</span>',
+                    'in_progress': '<span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border bg-blue-500/10 text-blue-400 border-blue-500/30">🔄 IN PROGRESS</span>',
+                    'completed': '<span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/30">✓ COMPLETED</span>',
+                    'rejected': '<span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border bg-red-500/10 text-red-400 border-red-500/30">✕ REJECTED</span>'
+                };
+                return statusMap[status] || statusMap['pending'];
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Close modal when clicking outside
+            document.getElementById('detailModal')?.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeDetailModal();
+                }
+            });
+        </script>
     </div>
 </x-layouts.app>
+

@@ -79,8 +79,8 @@ use Illuminate\Support\Str;
                 </label>
                 <select name="role" id="role" required
                     class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                    <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>User</option>
-                    <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="user" {{ old('role', $user->role->value) === 'user' ? 'selected' : '' }}>User</option>
+                    <option value="admin" {{ old('role', $user->role->value) === 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
                 @error('role')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

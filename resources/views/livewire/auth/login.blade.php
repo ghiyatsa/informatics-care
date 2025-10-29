@@ -92,7 +92,7 @@
                 <label for="remember" class="text-sm text-slate-300">Ingat saya</label>
             </div>
 
-            <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-[1.02] font-semibold font-mono text-white">
+            <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-[1.02] font-semibold font-mono text-white font-bold">
                 ↓ Login
             </button>
         </form>

@@ -50,4 +50,22 @@ class ReportController extends Controller
 
         return view('reports.my', compact('reports'));
     }
+
+    /**
+     * Delete a report (user can only delete their own reports)
+     */
+    public function destroy(Report $report): RedirectResponse
+    {
+        try {
+            $this->reportService->deleteReport($report, Auth::user());
+
+            return redirect()
+                ->route('reports.my')
+                ->with('success', 'Laporan berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
+        }
+    }
 }

@@ -2,11 +2,18 @@
     <div class="flex h-full w-full flex-1 flex-col gap-6">
         @php
             $user = auth()->user();
+            // Optimized: Use single query with selectRaw to get all counts at once
+            $reportStats = \App\Models\Report::selectRaw('
+                COUNT(*) as total_reports,
+                SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as pending_reports,
+                SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as completed_reports
+            ', ['pending', 'completed'])->first();
+
             $stats = [
-                'total_reports' => \App\Models\Report::count(),
-                'pending_reports' => \App\Models\Report::where('status', 'pending')->count(),
-                'completed_reports' => \App\Models\Report::where('status', 'completed')->count(),
-                'total_users' => \App\Models\User::where('role', 'user')->count(),
+                'total_reports' => $reportStats->total_reports ?? 0,
+                'pending_reports' => $reportStats->pending_reports ?? 0,
+                'completed_reports' => $reportStats->completed_reports ?? 0,
+                'total_users' => \App\Models\User::where('role', \App\Enums\UserRole::User->value)->count(),
             ];
         @endphp
 
@@ -248,14 +255,14 @@
                                     </div>
                                     <div class="flex flex-col items-end gap-2">
                                         <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border
-                                            @if($report->status === 'pending') bg-amber-500/10 text-amber-400 border-amber-500/30
-                                            @elseif($report->status === 'in_progress') bg-blue-500/10 text-blue-400 border-blue-500/30
-                                            @elseif($report->status === 'completed') bg-emerald-500/10 text-emerald-400 border-emerald-500/30
+                                            @if($report->status->value === 'pending') bg-amber-500/10 text-amber-400 border-amber-500/30
+                                            @elseif($report->status->value === 'in_progress') bg-blue-500/10 text-blue-400 border-blue-500/30
+                                            @elseif($report->status->value === 'completed') bg-emerald-500/10 text-emerald-400 border-emerald-500/30
                                             @else bg-red-500/10 text-red-400 border-red-500/30
                                             @endif">
-                                            @if($report->status === 'pending') ⏳ PENDING
-                                            @elseif($report->status === 'in_progress') 🔄 PROGRESS
-                                            @elseif($report->status === 'completed') ✓ DONE
+                                            @if($report->status->value === 'pending') ⏳ PENDING
+                                            @elseif($report->status->value === 'in_progress') 🔄 PROGRESS
+                                            @elseif($report->status->value === 'completed') ✓ DONE
                                             @else ✕ REJECTED
                                             @endif
                                         </span>

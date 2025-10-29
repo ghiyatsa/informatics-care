@@ -39,10 +39,10 @@ use Illuminate\Support\Str;
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Role</dt>
                         <dd class="mt-1">
                             <span class="px-2 py-1 text-xs font-medium rounded-full
-                                @if($user->role === 'admin') bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400
+                                @if($user->role->value === 'admin') bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400
                                 @else bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400
                                 @endif">
-                                {{ ucfirst($user->role) }}
+                                {{ ucfirst($user->role->value) }}
                             </span>
                         </dd>
                     </div>

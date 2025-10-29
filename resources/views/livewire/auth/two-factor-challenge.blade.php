@@ -14,7 +14,7 @@
                     this.recovery_code = '';
 
                     $dispatch('clear-2fa-auth-code');
-            
+
                     $nextTick(() => {
                         this.showRecoveryInput
                             ? this.$refs.recovery_code?.focus()
@@ -80,7 +80,7 @@
                     <flux:button
                         variant="primary"
                         type="submit"
-                        class="w-full"
+                        class="w-full !text-white !font-bold"
                     >
                         {{ __('Continue') }}
                     </flux:button>

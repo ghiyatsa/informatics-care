@@ -55,7 +55,20 @@ class ReportService
             'admin_response' => $adminResponse,
         ]);
 
-        return $report->fresh();
+        return $report->fresh(['user', 'category']);
+    }
+
+    /**
+     * Delete a report
+     */
+    public function deleteReport(Report $report, ?User $user = null): bool
+    {
+        // If user is provided, check if they own the report
+        if ($user && $report->user_id !== $user->id) {
+            throw new \Exception('Anda tidak memiliki izin untuk menghapus laporan ini!');
+        }
+
+        return $report->delete();
     }
 }
 
