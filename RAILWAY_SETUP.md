@@ -241,6 +241,7 @@ Karena project ini menggunakan **Livewire + Vite**, pastikan:
 
 **Jika dapat Server Error atau assets tidak loading:**
 - Lihat panduan lengkap di [`RAILWAY_LIVEWIRE_FIX.md`](RAILWAY_LIVEWIRE_FIX.md)
+- Atau lihat [`DEBUG_SERVER_ERROR.md`](DEBUG_SERVER_ERROR.md) untuk debugging server error
 
 ### Error: "APP_KEY not set"
 

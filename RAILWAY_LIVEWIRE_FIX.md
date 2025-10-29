@@ -10,9 +10,9 @@ Jika Anda mendapatkan **Server Error** setelah deploy, kemungkinan besar masalah
 2. Klik deployment terakhir
 3. Scroll ke bagian build logs
 4. Cari log yang berkaitan dengan:
-   - `npm ci`
-   - `npm run build`
-   - `Building assets with Vite`
+    - `npm ci`
+    - `npm run build`
+    - `Building assets with Vite`
 
 **Pastikan tidak ada error** di bagian tersebut.
 
@@ -34,10 +34,10 @@ Setelah deploy, check apakah `public/build` folder ada:
 1. Di Railway dashboard, buka **Deployments**
 2. Klik deployment terakhir
 3. Scroll ke logs, cari baris:
-   ```
-   ✅ Assets built successfully!
-   📋 Build output:
-   ```
+    ```
+    ✅ Assets built successfully!
+    📋 Build output:
+    ```
 4. Pastikan ada file-file di dalamnya (seperti `manifest.json`, `.js`, `.css`)
 
 Jika **TIDAK ADA**, berarti build gagal.
@@ -50,8 +50,8 @@ Jika build gagal:
 2. Scroll ke **"Deployments"** section
 3. Klik **"Clear Build Cache"** (jika ada)
 4. Atau buat deployment baru:
-   - Tab **"Deployments"**
-   - Klik **"Redeploy"** → **"Deploy now"**
+    - Tab **"Deployments"**
+    - Klik **"Redeploy"** → **"Deploy now"**
 
 ### 5. Check Build Logs untuk Error
 
@@ -62,6 +62,7 @@ Cari error seperti:
 ```
 
 Atau:
+
 ```
 npm ERR! ...
 ```
@@ -69,26 +70,29 @@ npm ERR! ...
 **Common issues:**
 
 #### a. Node.js version tidak compatible
-- Railway biasanya auto-detect, tapi bisa force dengan `nixpacks.toml`
+
+-   Railway biasanya auto-detect, tapi bisa force dengan `nixpacks.toml`
 
 #### b. npm install gagal
-- Check `package.json` dependencies
-- Pastikan tidak ada dependency yang broken
+
+-   Check `package.json` dependencies
+-   Pastikan tidak ada dependency yang broken
 
 #### c. Vite build error
-- Check `vite.config.js`
-- Pastikan Laravel Vite plugin terinstall
+
+-   Check `vite.config.js`
+-   Pastikan Laravel Vite plugin terinstall
 
 ### 6. Manual Fix: Deploy dengan Build Command Explicit
 
 Jika masih error, coba override build command di Railway:
 
 1. Tab **Settings** → Scroll ke **"Build"** Luaan
-2. Set`:**
-   - **Build Command:** 
-     ```bash
-     composer install --no-dev --optimize-autoloader && npm ci && npm run build && php artisan storage:link && php artisan config:cache && php artisan route:cache && php artisan view:cache
-     ```
+2. Set`:\*\*
+    - **Build Command:**
+        ```bash
+        composer install --no-dev --optimize-autoloader && npm ci && npm run build && php artisan storage:link && php artisan config:cache && php artisan route:cache && php artisan view:cache
+        ```
 
 ### 7. Alternative: Build Assets Lokal
 
@@ -115,14 +119,14 @@ git push
 
 Gunakan checklist ini untuk debug:
 
-- [ ] Build logs menunjukkan `npm run build` berhasil
-- [ ] Logs menunjukkan `✅ Assets built successfully!`
-- [ ] `public/build` folder ada di build output
-- [ ] `public/build/manifest.json` ada
-- [ ] `VITE_APP_URL` environment variable di-set dengan benar
-- [ ] `APP_URL` sama dengan `VITE_APP_URL`
-- [ ] Browser console tidak menunjukkan 404 untuk asset files
-- [ ] Network tab menunjukkan asset files loading (200 OK)
+-   [ ] Build logs menunjukkan `npm run build` berhasil
+-   [ ] Logs menunjukkan `✅ Assets built successfully!`
+-   [ ] `public/build` folder ada di build output
+-   [ ] `public/build/manifest.json` ada
+-   [ ] `VITE_APP_URL` environment variable di-set dengan benar
+-   [ ] `APP_URL` sama dengan `VITE_APP_URL`
+-   [ ] Browser console tidak menunjukkan 404 untuk asset files
+-   [ ] Network tab menunjukkan asset files loading (200 OK)
 
 ---
 
@@ -131,6 +135,7 @@ Gunakan checklist ini untuk debug:
 ### Error: "Vite manifest not found"
 
 **Solution:**
+
 ```bash
 # Pastikan build berjalan dengan benar
 npm run build
@@ -140,22 +145,26 @@ npm run build
 ### Error: "Failed to load resource: 404"
 
 **Solution:**
-- Pastikan `VITE_APP_URL` di-set dengan benar
-- Pastikan `public/build` folder ter-build
-- Clear browser cache
-- Check Railway logs untuk asset paths
+
+-   Pastikan `VITE_APP_URL` di-set dengan benar
+-   Pastikan `public/build` folder ter-build
+-   Clear browser cache
+-   Check Railway logs untuk asset paths
 
 ### Error: "npm: command not found"
 
 **Solution:**
-- Railway seharusnya auto-install Node.js
-- Check Railway build logs untuk Node.js installation
-- Jika tidak ada, mungkin perlu setup `nixpacks.toml`
+
+-   Railway seharusnya auto-install Node.js
+-   Check Railway build logs untuk Node.js installation
+-   Jika tidak ada, mungkin perlu setup `nixpacks.toml`
 
 ### Error: "Storage link failed"
 
 **Solution:**
-- Ini tidak critical untuk assets, tapi bisa ditambahkan:
+
+-   Ini tidak critical untuk assets, tapi bisa ditambahkan:
+
 ```bash
 php artisan storage:link
 ```
@@ -164,13 +173,14 @@ php artisan storage:link
 
 ## 📝 Update Environment Variables
 
- production:
+production:
+
 1. Go to Railway → Variables tab
 2. Add/Update:
-   ```
-   VITE_APP_NAME=Informatics Care
-   VITE_APP_URL=https://your-app.railway.app
-   ```
+    ```
+    VITE_APP_NAME=Informatics Care
+    VITE_APP_URL=https://your-app.railway.app
+    ```
 
 Pastikan `VITE_APP_URL` sama dengan `APP_URL`!
 
@@ -190,12 +200,11 @@ Jika masih error setelah semua langkah di atas:
 
 ## 💡 Tips
 
-- Railway biasanya auto-detect Laravel dan install Node.js
-- Build process seharusnya otomatis dengan `deploy.sh`
-- Jika build gagal, check logs di Railway dashboard
-- Pastikan `.gitignore` TIDAK meng-ignore `public/build` (tapi ini normal untuk commit)
+-   Railway biasanya auto-detect Laravel dan install Node.js
+-   Build process seharusnya otomatis dengan `deploy.sh`
+-   Jika build gagal, check logs di Railway dashboard
+-   Pastikan `.gitignore` TIDAK meng-ignore `public/build` (tapi ini normal untuk commit)
 
 ---
 
 **Masih error?** Share Railway build logs dan saya bisa bantu debug lebih lanjut!
-

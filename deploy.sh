@@ -34,7 +34,13 @@ ls -lh public/build/ || true
 echo "🔗 Creating storage link..."
 php artisan storage:link || echo "⚠️  Storage link already exists"
 
-echo "⚙️  Caching configuration..."
+echo "⚙️  Optimizing application..."
+# Clear first to avoid conflicts
+php artisan config:clear || true
+php artisan route:clear || true
+php artisan view:clear || true
+
+# Then cache for production
 php artisan config:cache || true
 php artisan route:cache || true
 php artisan view:cache || true
