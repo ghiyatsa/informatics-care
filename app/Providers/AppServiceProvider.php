@@ -27,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
         // Optimize query performance by setting default pagination
         \Illuminate\Pagination\Paginator::useBootstrap();
 
+        // Force HTTPS in production
+        if (config('app.env') !== 'local') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         // Share common data to all views (optional optimization)
         // view()->composer('*', function ($view) {
         //     // Add common data if needed
