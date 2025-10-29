@@ -27,9 +27,10 @@ class AppServiceProvider extends ServiceProvider
         // Optimize query performance by setting default pagination
         \Illuminate\Pagination\Paginator::useBootstrap();
 
-        // Force HTTPS in production
+        // Force HTTPS and set trusted proxy for production (Railway)
         if (config('app.env') !== 'local') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
+            \Illuminate\Support\Facades\URL::forceRootUrl(config('app.url'));
         }
 
         // Share common data to all views (optional optimization)
