@@ -30,8 +30,8 @@ else
     echo "   If you see database errors, check DB_* environment variables"
 fi
 
-# Create storage link if needed
-php artisan storage:link || echo "ℹ️  Storage link already exists"
+# Create storage link if needed (suppress error if already exists)
+php artisan storage:link 2>&1 | grep -v "already exists" || echo "ℹ️  Storage link ready"
 
 # Show environment info
 echo "📋 Environment Info:"
@@ -41,5 +41,6 @@ echo "   APP_URL: ${APP_URL:-not set}"
 
 # Start PHP server
 echo "🌐 Starting PHP server on port ${PORT:-8000}..."
-exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+echo "✅ Laravel is ready! Server starting..."
+exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000} --no-reload
 

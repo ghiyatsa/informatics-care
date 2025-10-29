@@ -32,12 +32,14 @@ APP_DEBUG=true
 **Error di logs:** `No application encryption key has been specified`
 
 **Fix:**
+
 ```bash
 # Di local terminal
 php artisan key:generate --show
 ```
 
 Copy output, paste ke Railway Variables sebagai:
+
 ```
 APP_KEY=base64:xxxxxxxxxxxxx
 ```
@@ -49,16 +51,17 @@ APP_KEY=base64:xxxxxxxxxxxxx
 **Error di logs:** `SQLSTATE[HY000]` atau `Connection refused`
 
 **Fix:**
+
 1. Pastikan PostgreSQL service sudah dibuat
-2. Check Variables DB_* menggunakan format:
-   ```
-   DB_CONNECTION=pgsql
-   DB_HOST=${{Postgres.PGHOST}}
-   DB_PORT=${{Postgres.PGPORT}}
-   DB_DATABASE=${{Postgres.PGDATABASE}}
-   DB_USERNAME=${{Postgres.PGUSER}}
-   DB_PASSWORD=${{Postgres.PGPASSWORD}}
-   ```
+2. Check Variables DB\_\* menggunakan format:
+    ```
+    DB_CONNECTION=pgsql
+    DB_HOST=${{Postgres.PGHOST}}
+    DB_PORT=${{Postgres.PGPORT}}
+    DB_DATABASE=${{Postgres.PGDATABASE}}
+    DB_USERNAME=${{Postgres.PGUSER}}
+    DB_PASSWORD=${{Postgres.PGPASSWORD}}
+    ```
 3. Restart service di Railway
 
 ---
@@ -69,6 +72,7 @@ APP_KEY=base64:xxxxxxxxxxxxx
 
 **Fix:**
 Railway biasanya handle ini, tapi jika masih error, pastikan storage writable:
+
 ```bash
 chmod -R 775 storage bootstrap/cache
 ```
@@ -81,11 +85,13 @@ chmod -R 775 storage bootstrap/cache
 
 **Fix:**
 Add di Railway Variables (temporary):
+
 ```
 CLEAR_CACHE=true
 ```
 
 Atau manual clear via Railway CLI:
+
 ```bash
 railway run php artisan config:clear
 railway run php artisan route:clear
@@ -107,6 +113,7 @@ Check build logs, pastikan `composer install` berhasil tanpa error.
 ### Step 4: Test Minimal Request
 
 Test health endpoint:
+
 ```
 https://your-app.railway.app/up
 ```
@@ -118,9 +125,10 @@ Jika ini juga error, berarti masalah di Laravel bootstrap, bukan route specific.
 ### Step 5: Check Error Details
 
 Setelah set `APP_DEBUG=true`, refresh browser. Anda akan lihat:
-- **Error message**
-- **File dan line number**
-- **Stack trace**
+
+-   **Error message**
+-   **File dan line number**
+-   **Stack trace**
 
 Copy error message ini untuk debugging lebih lanjut.
 
@@ -130,13 +138,13 @@ Copy error message ini untuk debugging lebih lanjut.
 
 Gunakan checklist ini:
 
-- [ ] **APP_KEY** sudah di-set di Variables
-- [ ]安全检查**Database** variables sudah benar (format `${{Postgres.XXX}}`)
-- [ ] **APP_DEBUG=true** untuk lihat error detail
-- [ ] Check **Railway Logs** untuk error messages
-- [ ] Test **/up endpoint** untuk quick check
-- [ ] **Storage permissions** OK (biasanya auto-handled)
-- [ ] **Environment variables** semua sudah di-set
+-   [ ] **APP_KEY** sudah di-set di Variables
+-   [ ]安全检查**Database** variables sudah benar (format `${{Postgres.XXX}}`)
+-   [ ] **APP_DEBUG=true** untuk lihat error detail
+-   [ ] Check **Railway Logs** untuk error messages
+-   [ ] Test **/up endpoint** untuk quick check
+-   [ ] **Storage permissions** OK (biasanya auto-handled)
+-   [ ] **Environment variables** semua sudah di-set
 
 ---
 
@@ -150,11 +158,12 @@ Jika setelah semua langkah masih 500:
 4. **Share** error details untuk debugging
 
 **Most Common 500 Errors:**
-- Missing APP_KEY
-- Database connection failed  
-- Route cache corrupted
-- Missing .env variables
-- Class not found (autoload issue)
+
+-   Missing APP_KEY
+-   Database connection failed
+-   Route cache corrupted
+-   Missing .env variables
+-   Class not found (autoload issue)
 
 ---
 
@@ -174,11 +183,11 @@ Coba akses endpoint ini untuk isolate masalah:
 Jika urgent, bisa bypass cache:
 
 1. Railway Variables → Tambahkan:
-   ```
-   APP_DEBUG=true
-   CACHE_DRIVER=array
-   SESSION_DRIVER=array
-   ```
+    ```
+    APP_DEBUG=true
+    CACHE_DRIVER=array
+    SESSION_DRIVER=array
+    ```
 2. Redeploy
 3. Test lagi
 
@@ -187,4 +196,3 @@ Jika urgent, bisa bypass cache:
 ---
 
 **Bantu saya debug:** Set `APP_DEBUG=true`, refresh browser, dan share error message yang muncul!
-
