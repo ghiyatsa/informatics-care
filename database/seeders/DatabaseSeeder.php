@@ -14,28 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create or update admin user
-        User::updateOrCreate(
-            ['email' => 'admin@informatics-care.local'],
-            [
-                'name' => 'Admin',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-                'role' => 'admin',
-            ]
-        );
-
-        // Create or update sample regular user
-        User::updateOrCreate(
-            ['email' => 'mahasiswa@informatics-care.local'],
-            [
-                'name' => 'Mahasiswa Test',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-                'role' => 'user',
-                'student_id' => 'TI202401',
-            ]
-        );
 
         // Create admin with unimal.ac.id domain
         User::updateOrCreate(
