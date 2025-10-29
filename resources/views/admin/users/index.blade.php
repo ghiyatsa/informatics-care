@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
         >
             <x-slot name="actions">
                 <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 border border-blue-500/30 hover:border-cyan-400/80 rounded-xl hover:bg-blue-500/10 transition-all backdrop-blur-sm text-white font-medium">← Dashboard</a>
-                <a href="{{ route('admin.users.create') }}" class="group px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105 font-semibold font-mono flex items-center gap-2 text-white font-bold">
+                <a href="{{ route('admin.users.create') }}" class="group px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105 font-semibold font-mono flex items-center gap-2 text-white">
                     <span class="text-white">+ Add User</span>
                     <svg class="w-5 h-5 group-hover:rotate-90 transition-transform text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
