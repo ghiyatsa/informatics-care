@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', env('APP_ENV') === 'production' ? 'smtp' : 'log'),
+    'default' => env('MAIL_MAILER', env('APP_ENV') === 'production' ? 'resend' : 'log'),
 
     /*
     |--------------------------------------------------------------------------
