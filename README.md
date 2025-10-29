@@ -26,9 +26,9 @@ Aplikasi ini di-deploy menggunakan **Railway.app** - platform yang mudah digunak
 
 ### 📚 Panduan Deployment
 
-- **[RAILWAY_SETUP.md](RAILWAY_SETUP.md)** - Panduan lengkap step-by-step (direkomendasikan untuk pemula)
-- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Quick reference guide
-- **[RAILWAY_ENV_VARIABLES.txt](RAILWAY_ENV_VARIABLES.txt)** - Template environment variables untuk copy-paste
+-   **[RAILWAY_SETUP.md](RAILWAY_SETUP.md)** - Panduan lengkap step-by-step (direkomendasikan untuk pemula)
+-   **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Quick reference guide
+-   **[RAILWAY_ENV_VARIABLES.txt](RAILWAY_ENV_VARIABLES.txt)** - Template environment variables untuk copy-paste
 
 **Quick Steps:**
 

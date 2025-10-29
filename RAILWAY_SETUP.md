@@ -3,10 +3,11 @@
 ## 📋 Checklist Pra-Deployment
 
 Sebelum mulai, pastikan:
-- [x] Repository sudah di-push ke GitHub
-- [ ] Akun Railway sudah dibuat
-- [ ] Google OAuth credentials sudah siap
-- [ ] Database PostgreSQL akan dibuat otomatis oleh Railway
+
+-   [x] Repository sudah di-push ke GitHub
+-   [ ] Akun Railway sudah dibuat
+-   [ ] Google OAuth credentials sudah siap
+-   [ ] Database PostgreSQL akan dibuat otomatis oleh Railway
 
 ---
 
@@ -27,9 +28,9 @@ Sebelum mulai, pastikan:
 3. Jika pertama kali, klik **"Configure GitHub App"** dan berikan permission
 4. Pilih repository: **`informatics-care`** (atau nama repo Anda)
 5. Railway akan otomatis:
-   - Detect bahwa ini adalah Laravel project
-   - Mulai build process
-   - Tapi **JANGAN DEPLOY DULU**, kita perlu setup database dulu!
+    - Detect bahwa ini adalah Laravel project
+    - Mulai build process
+    - Tapi **JANGAN DEPLOY DULU**, kita perlu setup database dulu!
 
 ---
 
@@ -39,11 +40,11 @@ Sebelum mulai, pastikan:
 2. Pilih **"Database"** → **"Add PostgreSQL"**
 3. Tunggu beberapa detik sampai database selesai dibuat
 4. Railway akan **otomatis** menambahkan environment variables:
-   - `PGHOST`
-   - `PGPORT`
-   - `PGDATABASE`
-   - `PGUSER`
-   - `PGPASSWORD`
+    - `PGHOST`
+    - `PGPORT`
+    - `PGDATABASE`
+    - `PGUSER`
+    - `PGPASSWORD`
 
 **✅ Database sudah siap!**
 
@@ -54,7 +55,7 @@ Sebelum mulai, pastikan:
 Buka terminal lokal dan jalankan:
 
 ```bash
-紙php artisan key:generate --show
+php artisan key:generate --show
 ```
 
 **Copy output-nya** (format: `base64:xxxxxxxxxxxxx`)
@@ -85,12 +86,14 @@ APP_DEBUG=false
 ```
 APP_KEY=paste_hasil_dari_step_4_di_sini
 ```
-*Contoh: `APP_KEY=base64 gL5kPj8mN2qR7sT9uV1wX3yZ5bC8dE0fG2hI4jK6lM9nO1pQ3rS5tU7vW9xY1zA3`
+
+\*Contoh: `APP_KEY=base64 gL5kPj8mN2qR7sT9uV1wX3yZ5bC8dE0fG2hI4jK6lM9nO1pQ3rS5tU7vW9xY1zA3`
 
 ```
 APP_URL=https://your-app-name.railway.app
 ```
-*Ganti `your-app-name` dengan nama project Anda (akan muncul setelah deploy pertama)*
+
+_Ganti `your-app-name` dengan nama project Anda (akan muncul setelah deploy pertama)_
 
 ### Database Variables (Otomatis oleh Railway):
 
@@ -120,7 +123,8 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret_dari_google_cloud_console
 ```
 GOOGLE_REDIRECT=https://your-app-name.railway.app/auth/google/callback
 ```
-*Update setelah dapat URL final*
+
+_Update setelah dapat URL final_
 
 ### Variables Tambahan (Opsional tapi Direkomendasikan):
 
@@ -140,6 +144,18 @@ QUEUE_CONNECTION=database
 LOG_LEVEL=error
 ```
 
+### Variables Penting untuk Livewire/Vite:
+
+```
+VITE_APP_NAME=Informatics Care
+```
+
+```
+VITE_APP_URL=https://your-app-name.railway.app
+```
+
+**⚠️ PENTING:** `VITE_APP_URL` harus sama dengan `APP_URL` (update setelah dapat URL final dari Railway)
+
 ---
 
 ## 🎯 Step 6: Deploy Pertama Kali
@@ -150,11 +166,12 @@ LOG_LEVEL=error
 4. Build logs bisa dilihat di tab **"Deployments"**
 
 **✅ Build akan menjalankan:**
-- `composer install --no-dev`
-- `npm ci`
-- `npm run build`
-- `php artisan migrate --force`
-- Dll (sesuai `deploy.sh`)
+
+-   `composer install --no-dev`
+-   `npm ci`
+-   `npm run build`
+-   `php artisan migrate --force`
+-   Dll (sesuai `deploy.sh`)
 
 ---
 
@@ -171,14 +188,16 @@ LOG_LEVEL=error
 
 1. Kembali ke tab **"Variables"**
 2. Update `APP_URL` dengan URL yang baru didapat:
-   ```
-   APP_URL=https://informatics-care-production.up.railway.app
-   ```
+
+    ```
+    APP_URL=https://informatics-care-production.up.railway.app
+    ```
 
 3. Update `GOOGLE_REDIRECT`:
-   ```
-   GOOGLE_REDIRECT=https://informatics-care-production.up.railway.app/auth/google/callback
-   ```
+
+    ```
+    GOOGLE_REDIRECT=https://informatics-care-production.up.railway.app/auth/google/callback
+    ```
 
 4. Railway akan otomatis redeploy setelah variable di-update
 
@@ -191,9 +210,9 @@ LOG_LEVEL=error
 3. Navigate ke **APIs & Services** → **Credentials**
 4. Klik OAuth 2.0 Client ID Anda
 5. Di bagian **Authorized redirect URIs**, tambahkan:
-   ```
-   https://informatics-care-production.up.railway.app/auth/google/callback
-   ```
+    ```
+    https://informatics-care-production.up.railway.app/auth/google/callback
+    ```
 6. Klik **Save**
 
 ---
@@ -202,40 +221,56 @@ LOG_LEVEL=error
 
 1. Buka URL aplikasi di browser
 2. Test fitur-fitur:
-   - [ ] Landing page bisa diakses
-   - [ ] Login/Register bekerja
-   - [ ] Google OAuth berfungsi (jika di-setup)
-   - [ ] Database connection bekerja
-   - [ ] Assets (CSS/JS) loading dengan benar
+    - [ ] Landing page bisa diakses
+    - [ ] Login/Register bekerja
+    - [ ] Google OAuth berfungsi (jika di-setup)
+    - [ ] Database connection bekerja
+    - [ ] Assets (CSS/JS) loading dengan benar
 
 ---
 
 ## 🔧 Troubleshooting
 
+### ⚠️ IMPORTANT: Livewire Assets Build
+
+Karena project ini menggunakan **Livewire + Vite**, pastikan:
+
+1. **Environment Variable `VITE_APP_URL`** di-set (sama dengan `APP_URL`)
+2. Build logs menunjukkan `✅ Assets built successfully!`
+3. `public/build` folder ada setelah build
+
+**Jika dapat Server Error atau assets tidak loading:**
+- Lihat panduan lengkap di [`RAILWAY_LIVEWIRE_FIX.md`](RAILWAY_LIVEWIRE_FIX.md)
+
 ### Error: "APP_KEY not set"
-- Pastikan sudah generate dan set `APP_KEY` di Variables
-- Format harus: `base64:xxxxxxxxxxxxx`
+
+-   Pastikan sudah generate dan set `APP_KEY` di Variables
+-   Format harus: `base64:xxxxxxxxxxxxx`
 
 ### Error: "Database connection failed"
-- Pastikan PostgreSQL database sudah dibuat
-- Check variables DB_* sudah benar
-- Pastikan menggunakan format `${{Postgres.XXX}}`
-- Restart service di Railway
+
+-   Pastikan PostgreSQL database sudah dibuat
+-   Check variables DB\_\* sudah benar
+-   Pastikan menggunakan format `${{Postgres.XXX}}`
+-   Restart service di Railway
 
 ### Error: "Assets not loading"
-- Check build logs apakah `npm run build` berhasil
-- Pastikan `public/build` folder ada
-- Clear browser cache
+
+-   Check build logs apakah `npm run build` berhasil
+-   Pastikan `public/build` folder ada
+-   Clear browser cache
 
 ### Build Fails: "composer install failed"
-- Check build logs untuk error detail
-- Pastikan `composer.json` valid
-- Pastikan PHP version compatible (8.2+)
+
+-   Check build logs untuk error detail
+-   Pastikan `composer.json` valid
+-   Pastikan PHP version compatible (8.2+)
 
 ### Migration Error
-- Check database connection dulu
-- Pastikan variables DB_* sudah benar
-- Lihat logs di Railway untuk detail error
+
+-   Check database connection dulu
+-   Pastikan variables DB\_\* sudah benar
+-   Lihat logs di Railway untuk detail error
 
 ---
 
@@ -243,13 +278,13 @@ LOG_LEVEL=error
 
 Setelah semua setup, pastikan:
 
-- [ ] Aplikasi bisa diakses via URL Railway
-- [ ] Landing page loading dengan benar
-- [ ] Login/Register form muncul
-- [ ] Database migrations sudah jalan (check via Railway logs)
-- [ ] Assets (CSS/JS) loading
-- [ ] Tidak ada error di Railway logs
-- [ ] Google OAuth redirect URI sudah diupdate
+-   [ ] Aplikasi bisa diakses via URL Railway
+-   [ ] Landing page loading dengan benar
+-   [ ] Login/Register form muncul
+-   [ ] Database migrations sudah jalan (check via Railway logs)
+-   [ ] Assets (CSS/JS) loading
+-   [ ] Tidak ada error di Railway logs
+-   [ ] Google OAuth redirect URI sudah diupdate
 
 ---
 
@@ -265,11 +300,10 @@ Setiap kali push ke GitHub, Railway akan otomatis deploy ulang (jika auto-deploy
 
 ## 📚 Referensi
 
-- [Railway Documentation](https://docs.railway.app)
-- [Railway Discord](https://discord.gg/railway)
-- [Laravel Deployment Guide](https://laravel.com/docs/deployment)
+-   [Railway Documentation](https://docs.railway.app)
+-   [Railway Discord](https://discord.gg/railway)
+-   [Laravel Deployment Guide](https://laravel.com/docs/deployment)
 
 ---
 
 **Perlu Bantuan?** Check Railway logs atau Railway Discord community!
-

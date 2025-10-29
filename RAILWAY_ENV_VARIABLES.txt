@@ -56,7 +56,12 @@ CACHE_DRIVER=database
 
 QUEUE_CONNECTION=database
 
-LOG_LEVEL=error
+{% endif %}
+# Vite Configuration (PENTING untuk Livewire assets)
+VITE_APP_NAME=Informatics Care
+
+VITE_APP_URL=https://your-app-name.railway.app
+# Note: HARUS sama dengan APP_URL (update setelah dapat URL dari Railway)
 
 MAIL_MAILER=smtp
 # Jika ingin setup email notifications
@@ -81,6 +86,11 @@ INSTRUKSI:
 4. Format ${{Postgres.XXX}}:
    - Ini adalah Railway syntax untuk reference database
    - Jangan diganti dengan value manual!
+
+5. Set VITE_APP_URL:
+   - Setelah dapat URL dari Railway
+   - Update VITE_APP_URL dengan URL yang sama dengan APP_URL
+   - Ini PENTING untuk Livewire/Vite assets loading!
 
 ========================================
 
