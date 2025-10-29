@@ -18,8 +18,23 @@
         ];
     }
 
-    $statusValue = is_object($status) && method_exists($status, 'value') ? $status->value : $status;
-    $statusValue = strtolower($statusValue);
+    // Handle enum or string
+    if (is_object($status)) {
+        // PHP 8.1+ BackedEnum has a 'value' property
+        if ($status instanceof \BackedEnum) {
+            $statusValue = $status->value;
+        } elseif (property_exists($status, 'value')) {
+            $statusValue = $status->value;
+        } elseif (method_exists($status, 'value')) {
+            $statusValue = $status->value();
+        } else {
+            $statusValue = (string) $status;
+        }
+    } else {
+        $statusValue = $status;
+    }
+
+    $statusValue = strtolower((string) $statusValue);
     $statusConfig = $statusMap[$statusValue] ?? $statusMap['pending'] ?? ['label' => strtoupper($statusValue), 'class' => 'bg-slate-500/10 text-slate-400 border-slate-500/30'];
 @endphp
 
