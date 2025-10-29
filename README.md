@@ -291,8 +291,8 @@ Proyek ini dikembangkan untuk Prodi Teknik Informatika Universitas Malikussaleh.
 
 Untuk pertanyaan atau bantuan, silakan hubungi:
 
--   Email: support@informatics-care.local
--   Website: Informatics Care - Prodi Teknik Informatika UMSA
+-   Email: informaticscareful@gmail.com
+-   Website: Informatics Care - Prodi Teknik Informatika UNIMAL
 
 ---
 
