@@ -24,14 +24,18 @@ Platform pelaporan masalah sarana dan prasarana untuk Prodi Teknik Informatika U
 
 Aplikasi ini di-deploy menggunakan **Railway.app** - platform yang mudah digunakan dan mendukung Laravel secara native.
 
-Lihat panduan lengkap di [`QUICK_DEPLOY.md`](QUICK_DEPLOY.md)
+### 📚 Panduan Deployment
+
+- **[RAILWAY_SETUP.md](RAILWAY_SETUP.md)** - Panduan lengkap step-by-step (direkomendasikan untuk pemula)
+- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Quick reference guide
+- **[RAILWAY_ENV_VARIABLES.txt](RAILWAY_ENV_VARIABLES.txt)** - Template environment variables untuk copy-paste
 
 **Quick Steps:**
 
 1. Sign up di [railway.app](https://railway.app) dengan GitHub
 2. New Project → Deploy from GitHub repo
 3. Tambahkan PostgreSQL database
-4. Set environment variables
+4. Set environment variables (lihat `RAILWAY_ENV_VARIABLES.txt`)
 5. Deploy! 🎉
 
 ## Instalasi

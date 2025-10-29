@@ -1,5 +1,11 @@
 # 🚀 Quick Deploy Guide - Railway.app (Paling Mudah)
 
+📖 **Untuk panduan detail step-by-step dengan screenshots, lihat:** [`RAILWAY_SETUP.md`](RAILWAY_SETUP.md)
+
+📋 **Untuk copy-paste environment variables, lihat:** [`RAILWAY_ENV_VARIABLES.txt`](RAILWAY_ENV_VARIABLES.txt)
+
+---
+
 ## Metode 1: Via Railway Dashboard (Tidak Perlu CLI)
 
 ### Langkah-langkah:
